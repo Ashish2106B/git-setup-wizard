@@ -1,0 +1,40 @@
+{
+  "name": "git-setup-wizard",
+  "version": "1.0.0",
+  "description": "An interactive CLI for setting up Git repositories and GitHub remotes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ashish2106B/git-setup-wizard.git"
+  },
+  "homepage": "https://github.com/Ashish2106B/git-setup-wizard#readme",
+  "main": "bin/index.js",
+  "files": [
+    "bin/",
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "git-setup-wizard": "./bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "keywords": [
+    "git",
+    "github",
+    "cli",
+    "git-setup",
+    "github-setup",
+    "automation",
+    "developer-tools"
+  ],
+  "author": "Ashish",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "inquirer": "^12.9.6"
+  }
+}
