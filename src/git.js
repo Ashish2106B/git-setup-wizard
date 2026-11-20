@@ -42,7 +42,13 @@ function stageInitialFiles() {
     }
     try {
         // Keep common credentials and private key files out of the automatic staging set.
-        execFileSync("git", ["add", "-A", "--", ".", ":!**/.env*", ":!**/*secret*", ":!**/*.pem", ":!**/*.key"], { stdio: "inherit" });
+        // Git's `**/` pathspec does not reliably match files at the repository root.
+        // Include both root-level and recursive glob exclusions.
+        execFileSync("git", [
+            "add", "-A", "--", ".",
+            ":(exclude,glob)*.env*", ":(exclude,glob)*secret*", ":(exclude,glob)*.pem", ":(exclude,glob)*.key",
+            ":(exclude,glob)**/*.env*", ":(exclude,glob)**/*secret*", ":(exclude,glob)**/*.pem", ":(exclude,glob)**/*.key"
+        ], { stdio: "inherit" });
         const staged = execFileSync("git", ["diff", "--cached", "--name-only"], { encoding: "utf8" }).trim();
         if (!staged) {
             console.log("No files to commit. Skipping.");

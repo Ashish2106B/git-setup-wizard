@@ -39,12 +39,6 @@ async function askQuestions() {
         },
         {
             type: "confirm",
-            name: "initialCommit",
-            message: "Create initial commit?",
-            default: true
-        },
-        {
-            type: "confirm",
             name: "setupRemote",
             message: "Configure GitHub remote?",
             default: false
@@ -72,16 +66,16 @@ async function askQuestions() {
         generateReadme(answers.projectName, answers.projectType);
     }
 
-    if (answers.initialCommit) {
-        const stagedFiles = stageInitialFiles();
-        if (stagedFiles.length > 0) showStagedChanges();
+    const stagedFiles = stageInitialFiles();
+    if (stagedFiles.length > 0) {
+        showStagedChanges();
         const { confirmed } = await inquirer.default.prompt([{
             type: "confirm",
             name: "confirmed",
             message: "Create an initial commit with the staged files shown above?",
             default: false
         }]);
-        if (confirmed && stagedFiles.length > 0) createInitialCommit();
+        if (confirmed) createInitialCommit();
         else console.log("Initial commit skipped.");
     }
 

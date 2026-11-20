@@ -33,7 +33,7 @@ The wizard asks for a project name and type, then offers these operations:
 1. **Initialize Git repository** — runs `git init -b main`. If the current directory already contains a `.git` entry, initialization is skipped.
 2. **Generate `.gitignore`** — writes the template for the selected project type. An existing `.gitignore` is left unchanged.
 3. **Generate `README.md`** — writes a small project README using the project name and type. An existing `README.md` is left unchanged.
-4. **Create initial commit** — stages project files, displays the staged file list and diff, then asks for confirmation before committing. Common sensitive filename patterns are excluded from automatic staging, and sensitive-looking staged filenames block the commit.
+4. **Create initial commit** — stages eligible project files, displays the staged file list and diff, then asks for confirmation before committing. Automatic staging excludes `.env*`, `*secret*`, `*.pem`, and `*.key` filenames at the repository root and in nested directories; sensitive-looking staged filenames also block the commit.
 5. **Configure GitHub remote** — asks for a GitHub HTTPS or SSH URL and adds it as `origin` only when no `origin` remote already exists. Create the GitHub repository first; the wizard does not create repositories or use the GitHub CLI.
 6. **Push to GitHub** — asks for confirmation before pushing the current branch to `origin`. Git uses the credentials already configured on your machine; the wizard does not save credentials.
 
@@ -47,7 +47,7 @@ For a new Node.js project:
 2. Run `npx git-setup-wizard`.
 3. Enter the project name and select **Node.js**.
 4. Accept Git initialization and starter file generation.
-5. Review the displayed staged files and diff before confirming the initial commit.
+5. Review the displayed staged files and diff, then confirm the initial commit when prompted.
 6. If you want to push, create an empty repository on GitHub, configure it as `origin` when prompted, then confirm the push.
 
 To run the wizard from a local checkout during development, use:
@@ -61,7 +61,7 @@ npm start
 
 - Existing `.gitignore`, `README.md`, and `origin` remote settings are not overwritten.
 - The wizard does not delete project files or configure GitHub credentials.
-- Initial staging excludes filenames matching common patterns such as `.env*`, `*secret*`, `*.pem`, and `*.key`, then shows the staged changes for review.
+- Initial staging excludes filenames matching `.env*`, `*secret*`, `*.pem`, and `*.key` at the repository root and in nested directories, then shows the staged changes for review before asking for commit confirmation.
 - Filename checks cannot detect secrets stored in ordinary-looking files. Inspect the displayed diff carefully before approving a commit.
 - A push sends the current branch and its commits to the configured remote after you confirm.
 
